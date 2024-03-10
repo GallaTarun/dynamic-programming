@@ -1,5 +1,5 @@
 /*
-    Given two strings a and b, return the length length 
+    Given two strings a and b, return the length  
     of the shortest possible string, that contains a and b 
     as subsequences. (Shortest Common SuperSequence)
     
@@ -10,13 +10,19 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// recursive LCS ==> TODO: can optimize this further to O(n^2)
 int longestCommonSubsequence(string a, string b, int m, int n) {
-    if(m == 0 || n == 0) return 0;
-    if(a[m-1] == b[n-1]) return 1 + longestCommonSubsequence(a, b, m-1, n-1);
-    return max(longestCommonSubsequence(a, b, m-1, n), longestCommonSubsequence(a, b, m, n-1));
+    int dp[m+1][n+1];
+    for(int i=0; i<m+1; i++) {
+        for(int j=0; j<n+1; j++) {
+            if(i==0 || j==0) dp[i][j] = 0;
+            else {
+                if(a[i-1] == b[j-1]) 
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                else dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
 }
-
 
 // new solution
 int shortestCommonSupersequence(string a, string b, int m, int n) {
